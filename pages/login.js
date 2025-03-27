@@ -1,7 +1,8 @@
-import { SafeAreaView, Text, TextInput, Button } from 'react-native';
+import { SafeAreaView, Text, TextInput, Button, View, Image } from 'react-native';
 import { useState } from 'react';
-import { mascara, pages, forms } from '../css/styles';
-import { orange } from '../css/styles';
+import { songStyles } from '../css/song-styling';
+import { orange, elements } from '../css/styles';
+import IconButton from '../components/icon-button';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState(null);
@@ -15,25 +16,37 @@ export default function Login({ navigation }) {
 
 
   return (
-    <SafeAreaView style={[ orange.container, orange.background ]}>
-        <Text style = { [mascara.paragraph, pages.green] }>Login</Text>
-        
-        <TextInput
-          style={forms.input}
-          onChangeText={setEmail}
-          placeholder="Informe seu email"
-        />
-        <TextInput
-          style={forms.input}
-          onChangeText={setPassword}
-          placeholder="Informe sua senha"
-        />
-        <Button
-          style={forms.button}
+    <SafeAreaView style={[ orange.container, orange.background, orange.loginContainer ]}>
+      <View style={orange.artifactA} />
+      <View style={orange.artifactB} />
+
+      <View style={ orange.loginImageRow } >
+        <Image 
+          source={require('../assets/images/logo.png')} 
+          style = { orange.loginImage }
+          resizeMode="contain"  />
+      </View>
+
+      <Text style={ [orange.title, { fontFamily: 'HeaderFont' }]} >Identifique-se:</Text>
+      
+      <TextInput
+        style={elements.input}
+        onChangeText={setEmail}
+        placeholder="Informe seu email"
+      />
+      <TextInput
+        style={elements.input}
+        onChangeText={setPassword}
+        placeholder="Informe sua senha"
+      />
+      
+      <View style={ elements.button }>
+        <IconButton
           onPress={handleLogin}
           title="Entrar"
-          accessibilityLabel="Entre"
-        />
+          size={36}
+        ></IconButton>
+      </View>
     </SafeAreaView>
   );
 }

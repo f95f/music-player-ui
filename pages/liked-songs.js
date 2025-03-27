@@ -1,7 +1,7 @@
 import { SafeAreaView, View } from 'react-native';
 import { usePlayer } from '../contexts/player-provider';
 import Song from '../components/song';
-import { orange } from '../css/styles';
+import { orange, elements } from '../css/styles';
 import { songs } from '../assets/songs';
 import GlobalHeader from '../components/header'
 
@@ -13,12 +13,14 @@ export default function LikedSongs({navigation}) {
     <SafeAreaView style={[ orange.container, orange.background ]}>
     <View style={orange.artifactA} />
     <View style={orange.artifactB} />
-      <GlobalHeader showHome={true} />
+      <GlobalHeader showHome={true} pageName="Curtidos" />
+      <View style={ elements.hr } />
       {
         likedSongs.map((item, index) => (
           <Song key={index} song={item} />
         ))
       }
+      <View style={ elements.hr } />
     </SafeAreaView>
   );
 }

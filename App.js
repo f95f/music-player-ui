@@ -1,7 +1,9 @@
-import { NavigationContainer } from '@react-navigation/native';
+
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { PlayerProvider } from './contexts/player-provider';
 import { navigationRef } from './contexts/navigation-ref';
+import { View } from 'react-native';
 
 import Splash from './pages/splash';
 import Login from './pages/login';
@@ -19,48 +21,48 @@ export default function App() {
     <PlayerProvider>
       <NavigationContainer ref={navigationRef}>
 
-        <Stack.Navigator
-          initialRouteName="Splash"
-        >
-          <Stack.Screen 
-            name="Splash" 
-            component={Splash} 
-            options={{ headerShown: false }} 
-          />
-          <Stack.Screen 
-            name="Login" 
-            component={Login} 
-            options={{ headerShown: false }} 
-          />
-          <Stack.Screen 
-            name="Home" 
-            component={Home} 
-            options={{ headerShown: false }} 
-          />
-          <Stack.Screen 
-            name="Playlist" 
-            component={Playlist} 
-            options={{ headerShown: false }} 
-          />
-          <Stack.Screen 
-            name="SongDetails" 
-            component={SongDetails} 
-            options={{ headerShown: false }} 
-          />
-          <Stack.Screen 
-            name="LikedSongs" 
-            component={LikedSongs} 
-            options={{ headerShown: false }} 
-          />
-          <Stack.Screen 
-            name="Settings" 
-            component={Settings}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
+          <Stack.Navigator
+            initialRouteName="Splash"
+          >
+            <Stack.Screen 
+              name="Splash" 
+              component={Splash} 
+              options={{ headerShown: false }} 
+            />
+            <Stack.Screen 
+              name="Login" 
+              component={Login} 
+              options={{ headerShown: false }} 
+            />
+            <Stack.Screen 
+              name="Home" 
+              component={Home} 
+              options={{ headerShown: false }} 
+            />
+            <Stack.Screen 
+              name="Playlist" 
+              component={Playlist} 
+              options={{ headerShown: false }} 
+            />
+            <Stack.Screen 
+              name="SongDetails" 
+              component={SongDetails} 
+              options={{ headerShown: false }} 
+            />
+            <Stack.Screen 
+              name="LikedSongs" 
+              component={LikedSongs} 
+              options={{ headerShown: false }} 
+            />
+            <Stack.Screen 
+              name="Settings" 
+              component={Settings}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
 
-        <NowPlaying />
-        
+          <NowPlaying />
+
       </NavigationContainer>
     </PlayerProvider>
   );

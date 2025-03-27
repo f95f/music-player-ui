@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, Button } from 'react-native';
+import { ImageBackground, View, Text, TouchableOpacity, StyleSheet, Image, Button } from 'react-native';
 import { usePlayer } from '../contexts/player-provider';
 import { useNavigation } from '@react-navigation/native';
+import { songStyles } from '../css/song-styling';
 import PlayerBar from '../components/player-bar';
+import IconButton from '../components/icon-button';
 
 export default function NowPlaying() {
   const navigation = useNavigation();
@@ -12,56 +14,81 @@ export default function NowPlaying() {
   if (!currentSong) return null;
 
   return (
-    <TouchableOpacity onPress={() => setIsFullScreen(!isFullScreen)}>
-      <View style={isFullScreen ? styles.fullScreen : styles.normal}>
-        <Text style={styles.text}>Now Playing: {currentSong.name}</Text>
-        {isFullScreen && (
-          <View>
-            <Image source={currentSong.coverUrl} style = { styles.img1 } />
-            
-            <Button
-              title="Detalhes"
+    <TouchableOpacity 
+      onPress={() => setIsFullScreen(!isFullScreen)}
+    >
+
+      {!isFullScreen && (
+        <View style={ songStyles.bottomCard }>
+          <View style={ songStyles.bottomCardTopRow }>
+            <View style={ songStyles.innerWrapper }>
+              <Image source={currentSong.coverUrl} style = { songStyles.smallThumbnail } />
+            </View>
+            <View style={ [songStyles.innerWrapper, songStyles.songResumesWrapper] }>
+              <Text style={ [songStyles.title, { fontFamily: 'HeaderFont' }]} >
+                {currentSong.name}
+              </Text>
+              <Text style={ songStyles.subtitle } >
+                { currentSong.author }
+              </Text>
+            </View>
+            <View style={ [songStyles.innerWrapper, songStyles.playWrapper] }>
+              <IconButton
+                onPress={() => {
+                  currentSong = null;
+                  setIsFullScreen(false);
+                }}
+                icon="pause"
+                iconClass="light-icon"
+                size={24}
+              ></IconButton>
+            </View>
+          </View>
+          <PlayerBar />
+        </View>
+      )}
+
+      {isFullScreen && (
+        <ImageBackground source={currentSong.coverUrl} style = { songStyles.detailsWrapper } resizeMode="cover"> 
+          
+          <View style={ songStyles.detailsTitleRow }>
+            <View style={ [songStyles.innerWrapper, songStyles.playWrapper] }>
+              <IconButton
+                onPress={() => {
+                  currentSong = null;
+                  setIsFullScreen(false);
+                }}
+                icon="pause"
+                iconClass="light-icon"
+                size={24}
+              ></IconButton>
+            </View>
+            <View style={ [songStyles.innerWrapper, songStyles.songDetailsRowWrapper] }>
+              <Text style={ [songStyles.currentSongTitle, { fontFamily: 'HeaderFont' }]} >
+                {currentSong.name}
+              </Text>
+              <Text style={ songStyles.subtitle } >
+                { currentSong.author }
+              </Text>
+            </View>
+          </View>
+
+          <View style={ songStyles.detailsButton }>
+            <IconButton
               onPress={() => {
                 navigation.navigate('SongDetails', currentSong)
                 setIsFullScreen(false)
               }}
-            />
-            <Button
-              title="Parar"
-              onPress={() => {
-                currentSong = null;
-                setIsFullScreen(false);
-              }}
-            />
-          </View>      
-        )}
-        <PlayerBar />
-      </View>
+              title="Detalhes"
+              icon="info-circle"
+              iconClass="light-icon"
+              size={24}
+            ></IconButton>
+          </View>
+
+        </ImageBackground>
+      )}
+
     </TouchableOpacity>
   )
 }
-
-const styles = StyleSheet.create({ // TODO: mover para o styles.js
-  normal: {
-    padding: 10,
-    backgroundColor: '#222',
-    // other styling for the compact view
-  },
-  fullScreen: {
-    backgroundColor: 'red',
-    // other styling for the full-screen view
-  },
-  text: {
-    color: '#fff',
-    fontSize: 16,
-  },
-  details: {
-    color: '#ccc',
-    marginTop: 10,
-    fontSize: 14,
-  },
-  img1: {
-    width: "100%",
-    height: 300
-  }
-});

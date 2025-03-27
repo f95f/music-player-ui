@@ -5,6 +5,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import IconButton from './icon-button';
 import Icon from "react-native-vector-icons/FontAwesome";
 
+export const fontes = {
+  HeaderFont:require('../assets/fonts/Quicksand-VariableFont_wght.ttf'),
+}
+
 export default function Song({ song }) {
   const { setCurrentSong } = usePlayer();
 
@@ -14,7 +18,7 @@ export default function Song({ song }) {
         <Image source={song.coverUrl} style = { songStyles.smallThumbnail } />
       </View>
       <View style={ [songStyles.innerWrapper, songStyles.songResumesWrapper] }>
-        <Text style={ songStyles.title } >
+        <Text style={ [songStyles.title, { fontFamily: 'HeaderFont' }]} >
           {song.name}
           { song.liked && <Icon name="star" style={ songStyles.likeIndicator }/> }
         </Text>
@@ -22,12 +26,12 @@ export default function Song({ song }) {
           { song.author }
         </Text>
       </View>
-      <View style={ songStyles.innerWrapper }>
+      <View style={ [songStyles.innerWrapper, songStyles.playWrapper] }>
         <IconButton 
           onPress={() => setCurrentSong(song)}
           icon="play"
           iconClass="light-icon"
-          size={32}
+          size={24}
         ></IconButton>
       </View>
     </View>
